@@ -53,7 +53,6 @@ public class Main {
         //
         //        Set<Person> personSet =new LinkedHashSet<>();
         //        personSet.add(p1);personSet.add(p2);personSet.add(p3);personSet.add(p4);personSet.add(p5);personSet.add(p6);
-        //        System.out.println(removeDuplicates(personSet));
 
      /*   TestingConstructor testingConstructor = new TestingConstructor();
         GeneralIssues generalIssues = new GeneralIssues();

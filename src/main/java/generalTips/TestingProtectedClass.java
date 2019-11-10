@@ -10,8 +10,8 @@ public class TestingProtectedClass {
     }
 
     void init() {
-        x = new Person(  );
-        x.
+//        x = new Person(  );
+//        x.
 
     }
 

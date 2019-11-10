@@ -1,27 +1,19 @@
 package general;
 
-import Office.Person;
-import general.tips.GeneralIssues;
-import generalTips.TestingConstructor;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import sendingMail.EmailController;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @SpringBootApplication
 @ComponentScan( basePackageClasses = EmailController.class )
 
-public class Main {
+public class Main implements Runnable {
 
     public static void main( String[] args ) {
 
@@ -61,23 +53,39 @@ public class Main {
         generalIssues.emptyStringCheck();
         generalIssues.conditionCheckInsteadOfIfElse();
 */
-    // stringTest();
-        test();
+        // stringTest();
+//        test();
+        /*Main m=new Main();
+        new Thread( m).start();
+*/
+
+        System.out.println("no of milliSecs in day : "+EnumToHandleSwitchCases.totalMillSeconds( EnumToHandleSwitchCases.DaysPerItem.MONTH ));
 
     }
 
-    private static String  test() {
-        Version v1=new Version( "2017.1.1");
-        Version v2=new Version( "2017.02.0999");
-        Version v3=new Version( "2017.02.0010");
-        java.util.ArrayList<general.Version> x=new java.util.ArrayList<>(  );
-        //        x.add( v1 );
-        //        x.add( v2 );
-        //        x.add( v3 );
-//        if(x.isEmpty()){
-//            return null;
-//        }
-        return Collections.max( x  ).toString();
+    private static void test() {
+        ArrayList<general.Version> x1 = new ArrayList<>();
+        ArrayList<String> x = new ArrayList<>();
+
+        String version1 = "2017.02.0010Snapshot";
+        String version2 = "2017.02.234";
+        String version3 = "2017.02.0-Snapshot";
+
+        x.add( version1 );
+        x.add( version2 );
+        x.add( version3 );
+
+        for ( String v : x ) {
+            String[] split = v.split( "\\." );
+            if ( split[ 2 ].chars().allMatch( Character :: isDigit ) ) {
+                Version version = new Version( version1 );
+                x1.add( version );
+            }
+        }
+
+
+        x1.forEach( x2 -> System.out.println( x2 ) );
+
     }
 
     public static void stringTest() {
@@ -89,42 +97,55 @@ public class Main {
         System.out.println( fname );
     }
 
-    public static Set<Person> removeDuplicates( Set<Person> PersonSet ) {
+    @Override
+    public void run() {
+        while ( true ){
+            Stream classStream = Stream.of( Integer.class, String.class );
+            Object collect = classStream.filter( e -> e.getClass().isInstance( Integer.class ) ).collect( Collectors.toList() );
+            System.out.println(collect.getClass());
 
-        Person p4 = new Person( "4", "r4" );
-        Person p5 = new Person( "5", "r5" );
-        Person p6 = new Person( "6", "r6" );
-        Set<Person> duplicatePersonSet = new LinkedHashSet<>();
-        duplicatePersonSet.add( p4 );
-        duplicatePersonSet.add( p5 );
-        duplicatePersonSet.add( p6 );
-
-        Set<Person> PersonList = Stream.concat( PersonSet.stream(), duplicatePersonSet.stream() ).collect( Collectors.toSet() );
-
-        //check difference between anyMatch() , allMatch() & noneMatch()
-        //anyMatch()
-        boolean b = duplicatePersonSet.stream().anyMatch( e -> e.getID().equals( "1" ) );
-        Optional<Person> pq1 = duplicatePersonSet.stream().findAny();
+        }}
 
 
-        //allMatch()
-        if ( duplicatePersonSet.stream().allMatch( x -> x.getName() ) ) {
-            System.out.println( "all match works" );
+
+        /*public static Set<Person> removeDuplicates( Set<Person> PersonSet ) {
+
+            Person p4 = new Person( "4", "r4" );
+            Person p5 = new Person( "5", "r5" );
+            Person p6 = new Person( "6", "r6" );
+            Set<Person> duplicatePersonSet = new LinkedHashSet<>();
+            duplicatePersonSet.add( p4 );
+            duplicatePersonSet.add( p5 );
+            duplicatePersonSet.add( p6 );
+
+            Set<Person> PersonList = Stream.concat( PersonSet.stream(), duplicatePersonSet.stream() ).collect( Collectors.toSet() );
+
+            //check difference between anyMatch() , allMatch() & noneMatch()
+            //anyMatch()
+            boolean b = duplicatePersonSet.stream().anyMatch( e -> e.getID().equals( "1" ) );
+            Optional<Person> pq1 = duplicatePersonSet.stream().findAny();
+
+
+            //allMatch()
+            if ( duplicatePersonSet.stream().allMatch( x -> x.getName() ) ) {
+                System.out.println( "all match works" );
+            }
+            //noneMatch()
+            Optional<Person> pe1 = duplicatePersonSet.stream().findAny();
+            Integer[] i = { 1, 2, 3, 4 };
+            String[] s = { "a3", "a2", "2323a1" };
+            String c = Arrays.stream( s ).skip( 1 ).findFirst().get();
+            int[] i1 = Arrays.stream( i ).mapToInt( e -> e ).toArray();
+            List<Integer> LA = new LinkedList<>( Arrays.asList( i ) );
+            List<Integer> LAClone = ( List<Integer> ) ( ( LinkedList<Integer> ) LA ).clone();
+            if ( Arrays.stream( i ).noneMatch( e -> e.equals( 22 ) ) ) {
+                System.out.println( "none match works" );
+            }
+
+            return PersonList;
         }
-        //noneMatch()
-        Optional<Person> pe1 = duplicatePersonSet.stream().findAny();
-        Integer[] i = { 1, 2, 3, 4 };
-        String[] s = { "a3", "a2", "2323a1" };
-        String c = Arrays.stream( s ).skip( 1 ).findFirst().get();
-        int[] i1 = Arrays.stream( i ).mapToInt( e -> e ).toArray();
-        List<Integer> LA = new LinkedList<>( Arrays.asList( i ) );
-        List<Integer> LAClone = ( List<Integer> ) ( ( LinkedList<Integer> ) LA ).clone();
-        if ( Arrays.stream( i ).noneMatch( e -> e.equals( 22 ) ) ) {
-            System.out.println( "none match works" );
-        }
 
-        return PersonList;
-    }
+         */
 }
 
 

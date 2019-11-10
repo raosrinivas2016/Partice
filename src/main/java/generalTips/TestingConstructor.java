@@ -5,7 +5,7 @@ package generalTips;
 import Office.Person;
 import Office.PersonManager;
 
-class TestingConstructor extends Person {
+public class   TestingConstructor extends Person {
 
     String id;
     String name;

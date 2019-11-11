@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EnumToHandleSwitchCases {
-    final static int millSecondsInADay = 24 * 60 * 60 * 1000;
+    private static final int millSecondsInADay = 24 * 60 * 60 * 1000;
 
     static long totalMillSeconds( DaysPerItem daysPerItem ) {
         DaysPerItem foundItem = daysPerItem.lookup( daysPerItem );
@@ -14,13 +14,13 @@ public class EnumToHandleSwitchCases {
 
 
     public enum DaysPerItem {
-        DAY( 1 ),
-        WEEKLY( 7 ),
         BIWEEKLY( 14 ),
+        DAY( 1 ),
         MONTH( 30 ),
+        WEEKLY( 7 ),
         YEAR( 365 );
 
-        long days;
+        final long days;
 
         DaysPerItem( long days ) {
             this.days = days;

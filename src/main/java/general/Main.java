@@ -1,6 +1,9 @@
 package general;
 
+import Office.Person;
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,46 +22,64 @@ public class Main implements Runnable {
         SpringApplication.run(Main.class,args);
         */
 
-        //       /* JFrame f=new JFrame();
-        //        WebAddressToIPTranslator watipt=new WebAddressToIPTranslator();
-        //        f.setContentPane(watipt.test);
-        //        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //        f.pack();
-        //        f.setVisible(true);*/
-        //
-        ////       ReadingPropertiesFile readingPropertiesFile=new ReadingPropertiesFile();
-        ////       readingPropertiesFile.readFile();
-        //
-        //
-        //        long minActive=25*60*1000;
-        //
-        //        System.out.println(System.currentTimeMillis());
-        //        System.out.println(System.currentTimeMillis());
-        //        System.out.println(1000*60*24);
-        //        System.out.println(1000*60*24);
-        //        Person p1=new Person("1","r1");
-        //        Person p2=new Person("2","r2");
-        //        Person p3=new Person("3","r3");
-        //        Person p4=new Person("4","r4");
-        //        Person p5=new Person("5","r5");
-        //        Person p6=new Person("6","r6");
-        //
-        //        Set<Person> personSet =new LinkedHashSet<>();
-        //        personSet.add(p1);personSet.add(p2);personSet.add(p3);personSet.add(p4);personSet.add(p5);personSet.add(p6);
+               /* JFrame f=new JFrame();
+                WebAddressToIPTranslator watipt=new WebAddressToIPTranslator();
+                f.setContentPane(watipt.test);
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.pack();
+                f.setVisible(true);*/
 
-     /*   TestingConstructor testingConstructor = new TestingConstructor();
+/*
+               ReadingPropertiesFile readingPropertiesFile=new ReadingPropertiesFile();
+               readingPropertiesFile.readFile();
+*/
+
+
+
+/*              long minActive=25*60*1000;
+                System.out.println(System.currentTimeMillis());
+                System.out.println(System.currentTimeMillis());
+                System.out.println(1000*60*24);
+                System.out.println(1000*60*24);
+                Person p1=new Person("1","r1");
+                Person p2=new Person("2","r2");
+                Person p3=new Person("3","r3");
+                Person p4=new Person("4","r4");
+                Person p5=new Person("5","r5");
+                Person p6=new Person("6","r6");
+
+                Set<Person> personSet =new LinkedHashSet<>();
+                personSet.add(p1);personSet.add(p2);personSet.add(p3);personSet.add(p4);personSet.add(p5);personSet.add(p6);
+*/
+/*      TestingConstructor testingConstructor = new TestingConstructor();
         GeneralIssues generalIssues = new GeneralIssues();
         generalIssues.emptyStringCheck();
         generalIssues.conditionCheckInsteadOfIfElse();
-*/
-        // stringTest();
-//        test();
-        /*Main m=new Main();
+
+        stringTest();
+        test();
+        Main m = new Main();
         new Thread( m).start();
+
+        testingEnum();
+        ReadingPropertiesFile.creatingCustomProperties();
 */
 
-        System.out.println("no of milliSecs in day : "+EnumToHandleSwitchCases.totalMillSeconds( EnumToHandleSwitchCases.DaysPerItem.MONTH ));
+        //TODO
+        //whats the difference between map and foreach in stream ? check documentation once.
+        lambadaExpression.sortedPersonStream().forEach( Person :: printPerson );
+        lambadaExpression.sortedPersonStream().map( Person :: printPerson );
 
+    }
+
+    private static void testingEnum() {
+        //        System.out.println("no of milliSecs in day : "+EnumToHandleSwitchCases.totalMillSeconds( EnumToHandleSwitchCases.DaysPerItem.MONTH ));
+
+        System.out.println( statusEnum.valueOf( "COMPLETED" ) );
+        EnumSet<statusEnum> pausedOrStopped = EnumSet.of( statusEnum.PAUSED, statusEnum.STOPPED );
+        Stream<statusEnum> completedOrPaused = Stream.of( statusEnum.COMPLETED, statusEnum.PAUSED );
+        List<statusEnum> stratedButStopped = completedOrPaused.filter( pausedOrStopped :: contains ).collect( Collectors.toList() );
+        System.out.println( "size of enum after filetring : " + stratedButStopped.size() );
     }
 
     private static void test() {
@@ -82,7 +103,7 @@ public class Main implements Runnable {
         }
 
 
-        x1.forEach( x2 -> System.out.println( x2 ) );
+        x1.forEach( System.out :: println );
 
     }
 
@@ -97,12 +118,13 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
-        while ( true ){
+        do {
             Stream classStream = Stream.of( Integer.class, String.class );
             Object collect = classStream.filter( e -> e.getClass().isInstance( Integer.class ) ).collect( Collectors.toList() );
-            System.out.println(collect.getClass());
+            System.out.println( collect.getClass() );
 
-        }}
+        } while ( true );
+    }
 
 
 

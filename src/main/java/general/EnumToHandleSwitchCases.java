@@ -12,7 +12,6 @@ public class EnumToHandleSwitchCases {
         return daysPerItem.getFieldValue( foundItem ) * millSecondsInADay;
     }
 
-
     public enum DaysPerItem {
         BIWEEKLY( 14 ),
         DAY( 1 ),

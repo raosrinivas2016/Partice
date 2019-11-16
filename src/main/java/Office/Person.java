@@ -1,16 +1,16 @@
 package Office;
 
+import java.util.Comparator;
 import java.util.Objects;
 
  public class Person {
     TestingProtectedInnerClass testingProtectedInnerClass;
-    private String ID;
-    private String name;
+     private String ID = "-1";
+     private String name = "";
 
-   public Person() {
-        ID = "";
-        name = "";
-    }
+     protected Person() {
+
+     }
 
    public Person( String ID, String name ) {
         this.ID = ID;
@@ -35,27 +35,43 @@ import java.util.Objects;
                        Objects.equals( name, person.name );
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                       "ID='" + ID + '\'' +
-                       ", name='" + name + '\'' +
-                       '}';
-    }
 
-    String getID() {
+     public int equals( Object o1, Object o2 ) {
+         if ( o1 != null ) {
+             Comparator<Person> personComparator = Comparator.comparing( Person :: getID );
+             Person p1 = ( Person ) o1;
+             Person p2 = ( Person ) o2;
+             return personComparator.compare( p1, p2 );
+         }
+         throw new NullPointerException();
+     }
+
+     @Override
+    public String toString() {
+        /*return "Person{" +
+                       "ID='" + getID() + '\'' +
+                       ", name='" + getName() + '\'' +*/
+         return getID() + getName();
+     }
+
+     public String printPerson() {
+         System.out.println( getID() + getName() );
+         return getID() + getName();
+     }
+
+     public String getID() {
         return ID;
     }
 
-    void setID( String ID ) {
+     public void setID( String ID ) {
         this.ID = ID;
     }
 
-    public boolean getName() {
+     private boolean getName() {
         return true;
     }
 
-    void setName( String name ) {
+     public void setName( String name ) {
         this.name = name;
     }
 
@@ -74,7 +90,7 @@ import java.util.Objects;
         }
 
         public void testMethod() {
-            System.out.println( "printing default values" );
+
             if ( ID.isEmpty() ) {
                 ID = "EMPTY";
             }

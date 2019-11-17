@@ -1,7 +1,5 @@
 package general;
 
-import Office.Person;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,10 +63,14 @@ public class Main implements Runnable {
         ReadingPropertiesFile.creatingCustomProperties();
 */
 
-        //TODO
-        //whats the difference between map and foreach in stream ? check documentation once.
+/*
+        TODO
+        whats the difference between map and foreach in stream ? check documentation once.
         lambadaExpression.sortedPersonStream().forEach( Person :: printPerson );
         lambadaExpression.sortedPersonStream().map( Person :: printPerson );
+*/
+
+        filterVersionObject();
 
     }
 
@@ -78,42 +80,31 @@ public class Main implements Runnable {
         System.out.println( statusEnum.valueOf( "COMPLETED" ) );
         EnumSet<statusEnum> pausedOrStopped = EnumSet.of( statusEnum.PAUSED, statusEnum.STOPPED );
         Stream<statusEnum> completedOrPaused = Stream.of( statusEnum.COMPLETED, statusEnum.PAUSED );
-        List<statusEnum> stratedButStopped = completedOrPaused.filter( pausedOrStopped :: contains ).collect( Collectors.toList() );
-        System.out.println( "size of enum after filetring : " + stratedButStopped.size() );
+        List<statusEnum> startedButStopped = completedOrPaused.filter( pausedOrStopped :: contains ).collect( Collectors.toList() );
+        System.out.println( "size of enum after filetring : " + startedButStopped.size() );
     }
 
-    private static void test() {
-        ArrayList<general.Version> x1 = new ArrayList<>();
-        ArrayList<String> x = new ArrayList<>();
+    private static void filterVersionObject( ) {
+        Stream.of( "2019.01.0-Snapshot", "2018.02.0010Snapshot", "2017.03.234" ).forEach( Main :: filterStringToAddVersionObject );
+    }
 
-        String version1 = "2017.02.0010Snapshot";
-        String version2 = "2017.02.234";
-        String version3 = "2017.02.0-Snapshot";
+    private static void filterStringToAddVersionObject( String givenString ) {
+        Stream.of( givenString.split( "\\." ) ).filter( s -> s.length() >= 2 ).forEach( Main :: test );
+    }
 
-        x.add( version1 );
-        x.add( version2 );
-        x.add( version3 );
-
-        for ( String v : x ) {
-            String[] split = v.split( "\\." );
-            if ( split[ 2 ].chars().allMatch( Character :: isDigit ) ) {
-                Version version = new Version( version1 );
-                x1.add( version );
-            }
+    private static void test( String s1 ) {
+        if ( s1.chars().allMatch( Character :: isDigit ) ) {
+            System.out.println( new Version( s1 ).toString() );
         }
-
-
-        x1.forEach( System.out :: println );
-
     }
 
     public static void stringTest() {
         String name = "xyz,";
         String[] nameSplit = name.split( "," );
-        String lname = nameSplit[ 0 ];
-        String fname = nameSplit.length > 1 ? nameSplit[ 1 ] : "";
-        System.out.println( lname );
-        System.out.println( fname );
+        String lName = nameSplit[ 0 ];
+        String fName = nameSplit.length > 1 ? nameSplit[ 1 ] : "";
+        System.out.println( lName );
+        System.out.println( fName );
     }
 
     @Override

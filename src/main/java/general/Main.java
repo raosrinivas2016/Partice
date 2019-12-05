@@ -1,11 +1,13 @@
 package general;
 
+import java.io.IOException;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import reading_endpoint.SecretsServiceUtil;
 import sendingMail.EmailController;
 
 
@@ -14,7 +16,7 @@ import sendingMail.EmailController;
 
 public class Main implements Runnable {
 
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws IOException {
 
         /* to launch spring application to send an email
         SpringApplication.run(Main.class,args);
@@ -62,7 +64,7 @@ public class Main implements Runnable {
         testingEnum();
         ReadingPropertiesFile.creatingCustomProperties();
 */
-
+        //        ReadingPropertiesFile.readFile();
 /*
         TODO
         whats the difference between map and foreach in stream ? check documentation once.
@@ -70,8 +72,15 @@ public class Main implements Runnable {
         lambadaExpression.sortedPersonStream().map( Person :: printPerson );
 */
 
-        filterVersionObject();
+        //        filterVersionObject();
 
+        /*JasonParsertest jasonParser = new JasonParsertest();
+        //jasonParser.JsonParserFile();
+
+        jasonParser.davidTest();*/
+
+
+        System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );
     }
 
     private static void testingEnum() {
@@ -89,7 +98,9 @@ public class Main implements Runnable {
     }
 
     private static void filterStringToAddVersionObject( String givenString ) {
-        Stream.of( givenString.split( "\\." ) ).filter( s -> s.length() >= 2 ).forEach( Main :: test );
+        //        Stream.of( givenString.split( "\\." ) ).filter( s -> s.length() >= 2 ).forEach( e -> {
+        //            Stream.of( givenString.split( "\\." ) ).Main.test( e[ 2 ] );
+        //        } );
     }
 
     private static void test( String s1 ) {

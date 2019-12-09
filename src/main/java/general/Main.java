@@ -1,12 +1,13 @@
 package general;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.IOException;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import reading_endpoint.SecretsServiceUtil;
 import sendingMail.EmailController;
 
 
@@ -15,96 +16,117 @@ import sendingMail.EmailController;
 
 public class Main implements Runnable {
 
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws IOException {
 
         /* to launch spring application to send an email
         SpringApplication.run(Main.class,args);
         */
 
-        //       /* JFrame f=new JFrame();
-        //        WebAddressToIPTranslator watipt=new WebAddressToIPTranslator();
-        //        f.setContentPane(watipt.test);
-        //        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //        f.pack();
-        //        f.setVisible(true);*/
-        //
-        ////       ReadingPropertiesFile readingPropertiesFile=new ReadingPropertiesFile();
-        ////       readingPropertiesFile.readFile();
-        //
-        //
-        //        long minActive=25*60*1000;
-        //
-        //        System.out.println(System.currentTimeMillis());
-        //        System.out.println(System.currentTimeMillis());
-        //        System.out.println(1000*60*24);
-        //        System.out.println(1000*60*24);
-        //        Person p1=new Person("1","r1");
-        //        Person p2=new Person("2","r2");
-        //        Person p3=new Person("3","r3");
-        //        Person p4=new Person("4","r4");
-        //        Person p5=new Person("5","r5");
-        //        Person p6=new Person("6","r6");
-        //
-        //        Set<Person> personSet =new LinkedHashSet<>();
-        //        personSet.add(p1);personSet.add(p2);personSet.add(p3);personSet.add(p4);personSet.add(p5);personSet.add(p6);
+               /* JFrame f=new JFrame();
+                WebAddressToIPTranslator watipt=new WebAddressToIPTranslator();
+                f.setContentPane(watipt.test);
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.pack();
+                f.setVisible(true);*/
 
-     /*   TestingConstructor testingConstructor = new TestingConstructor();
+/*
+               ReadingPropertiesFile readingPropertiesFile=new ReadingPropertiesFile();
+               readingPropertiesFile.readFile();
+*/
+
+
+
+/*              long minActive=25*60*1000;
+                System.out.println(System.currentTimeMillis());
+                System.out.println(System.currentTimeMillis());
+                System.out.println(1000*60*24);
+                System.out.println(1000*60*24);
+                Person p1=new Person("1","r1");
+                Person p2=new Person("2","r2");
+                Person p3=new Person("3","r3");
+                Person p4=new Person("4","r4");
+                Person p5=new Person("5","r5");
+                Person p6=new Person("6","r6");
+
+                Set<Person> personSet =new LinkedHashSet<>();
+                personSet.add(p1);personSet.add(p2);personSet.add(p3);personSet.add(p4);personSet.add(p5);personSet.add(p6);
+*/
+/*      TestingConstructor testingConstructor = new TestingConstructor();
         GeneralIssues generalIssues = new GeneralIssues();
         generalIssues.emptyStringCheck();
         generalIssues.conditionCheckInsteadOfIfElse();
-*/
-        // stringTest();
-//        test();
-        /*Main m=new Main();
+
+        stringTest();
+        test();
+        Main m = new Main();
         new Thread( m).start();
+
+        testingEnum();
+        ReadingPropertiesFile.creatingCustomProperties();
+*/
+        //        ReadingPropertiesFile.readFile();
+/*
+        TODO
+        whats the difference between map and foreach in stream ? check documentation once.
+        lambadaExpression.sortedPersonStream().forEach( Person :: printPerson );
+        lambadaExpression.sortedPersonStream().map( Person :: printPerson );
 */
 
-        System.out.println("no of milliSecs in day : "+EnumToHandleSwitchCases.totalMillSeconds( EnumToHandleSwitchCases.DaysPerItem.MONTH ));
+        //        filterVersionObject();
 
+        /*JasonParsertest jasonParser = new JasonParsertest();
+        //jasonParser.JsonParserFile();
+
+        jasonParser.davidTest();*/
+
+
+        System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );
     }
 
-    private static void test() {
-        ArrayList<general.Version> x1 = new ArrayList<>();
-        ArrayList<String> x = new ArrayList<>();
+    private static void testingEnum() {
+        //        System.out.println("no of milliSecs in day : "+EnumToHandleSwitchCases.totalMillSeconds( EnumToHandleSwitchCases.DaysPerItem.MONTH ));
 
-        String version1 = "2017.02.0010Snapshot";
-        String version2 = "2017.02.234";
-        String version3 = "2017.02.0-Snapshot";
+        System.out.println( statusEnum.valueOf( "COMPLETED" ) );
+        EnumSet<statusEnum> pausedOrStopped = EnumSet.of( statusEnum.PAUSED, statusEnum.STOPPED );
+        Stream<statusEnum> completedOrPaused = Stream.of( statusEnum.COMPLETED, statusEnum.PAUSED );
+        List<statusEnum> startedButStopped = completedOrPaused.filter( pausedOrStopped :: contains ).collect( Collectors.toList() );
+        System.out.println( "size of enum after filetring : " + startedButStopped.size() );
+    }
 
-        x.add( version1 );
-        x.add( version2 );
-        x.add( version3 );
+    private static void filterVersionObject( ) {
+        Stream.of( "2019.01.0-Snapshot", "2018.02.0010Snapshot", "2017.03.234" ).forEach( Main :: filterStringToAddVersionObject );
+    }
 
-        for ( String v : x ) {
-            String[] split = v.split( "\\." );
-            if ( split[ 2 ].chars().allMatch( Character :: isDigit ) ) {
-                Version version = new Version( version1 );
-                x1.add( version );
-            }
+    private static void filterStringToAddVersionObject( String givenString ) {
+        //        Stream.of( givenString.split( "\\." ) ).filter( s -> s.length() >= 2 ).forEach( e -> {
+        //            Stream.of( givenString.split( "\\." ) ).Main.test( e[ 2 ] );
+        //        } );
+    }
+
+    private static void test( String s1 ) {
+        if ( s1.chars().allMatch( Character :: isDigit ) ) {
+            System.out.println( new Version( s1 ).toString() );
         }
-
-
-        x1.forEach( x2 -> System.out.println( x2 ) );
-
     }
 
     public static void stringTest() {
         String name = "xyz,";
         String[] nameSplit = name.split( "," );
-        String lname = nameSplit[ 0 ];
-        String fname = nameSplit.length > 1 ? nameSplit[ 1 ] : "";
-        System.out.println( lname );
-        System.out.println( fname );
+        String lName = nameSplit[ 0 ];
+        String fName = nameSplit.length > 1 ? nameSplit[ 1 ] : "";
+        System.out.println( lName );
+        System.out.println( fName );
     }
 
     @Override
     public void run() {
-        while ( true ){
+        do {
             Stream classStream = Stream.of( Integer.class, String.class );
             Object collect = classStream.filter( e -> e.getClass().isInstance( Integer.class ) ).collect( Collectors.toList() );
-            System.out.println(collect.getClass());
+            System.out.println( collect.getClass() );
 
-        }}
+        } while ( true );
+    }
 
 
 

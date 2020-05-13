@@ -1,6 +1,8 @@
 package general;
 
 import dailyPratice.CodeOptimization;
+import learnTesting.CustomException;
+import learnTesting.ImplementCalculator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import sendingMail.EmailController;
@@ -23,7 +25,13 @@ public class Main implements Runnable {
         if(new April_30_2020().isFaxNoValid( "1-212-222 8888" )){
             System.out.println("given Fax no is in valid format");
         }
-*/
+         /*testing custom exceptions*/
+        try {
+            new ImplementCalculator().div( 1, 0 );
+        } catch ( CustomException e ) {
+            e.printStackTrace();
+        }
+
 
         int[] ants = { 23, 231, 232 };
         new CodeOptimization().getPatientLetters( ants );
@@ -93,7 +101,7 @@ public class Main implements Runnable {
         //Secrets out project : to read an endpoint*/
         /*System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );*/
 
-        /*Math Project :*/
+        //        System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );
 
 
         /*System.out.printf( "Result : %d %n", new general.math.ImplementCalculate().addSubMulDiv( new Integer[]{ 1, 2, 3 }, "add" ) );
@@ -157,12 +165,12 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
-        do {
+        while ( true ) {
             Stream classStream = Stream.of( Integer.class, String.class );
             Object collect = classStream.filter( e -> e.getClass().isInstance( Integer.class ) ).collect( Collectors.toList() );
             System.out.println( collect.getClass() );
 
-        } while ( true );
+        }
     }
 
 

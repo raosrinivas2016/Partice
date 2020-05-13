@@ -1,13 +1,13 @@
 package general;
 
-import java.io.IOException;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import learnTesting.CustomException;
+import learnTesting.ImplementCalculator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import reading_endpoint.SecretsServiceUtil;
 import sendingMail.EmailController;
 
 
@@ -16,7 +16,15 @@ import sendingMail.EmailController;
 
 public class Main implements Runnable {
 
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) {
+        /*testing custom exceptions*/
+        try {
+            new ImplementCalculator().div( 1, 0 );
+        } catch ( CustomException e ) {
+            e.printStackTrace();
+        }
+
+
 
         /* to launch spring application to send an email
         SpringApplication.run(Main.class,args);
@@ -80,7 +88,7 @@ public class Main implements Runnable {
         jasonParser.davidTest();*/
 
 
-        System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );
+        //        System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );
     }
 
     private static void testingEnum() {
@@ -120,12 +128,12 @@ public class Main implements Runnable {
 
     @Override
     public void run() {
-        do {
+        while ( true ) {
             Stream classStream = Stream.of( Integer.class, String.class );
             Object collect = classStream.filter( e -> e.getClass().isInstance( Integer.class ) ).collect( Collectors.toList() );
             System.out.println( collect.getClass() );
 
-        } while ( true );
+        }
     }
 
 

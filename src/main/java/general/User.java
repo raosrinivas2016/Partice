@@ -1,33 +1,43 @@
 package general;
 
-public class User {
-    private String id;
+public class User implements Comparable<general.User> {
+
+    private int id;
     private String name;
 
-    @Override
-    public String toString( ) {
-        //        System.out.println( "hhhhh" );
-        return "User{" +
-                       "id='" + id + '\'' +
-                       ", name='" + name + '\'' +
-                       '}';
+    //    @Override
+    //    public String toString( ) {
+    //        //        System.out.println( "hhhhh" );
+    //        return "User{" +
+    //                       "id='" + id + '\'' +
+    //                       ", name='" + name + '\'' +
+    //                       '}';
+    //    }
+
+    public User( int id, String name ) {
+        this.id = id;
+        this.name = name;
     }
 
-
-    public String getId( ) {
+    public int getId() {
         return id;
     }
 
-    public void setId( String id ) {
+    public void setId( int id ) {
         this.id = id;
     }
 
-    public String getName( ) {
+    public String getName() {
         return name;
     }
 
     public void setName( String name ) {
         this.name = name;
+    }
+
+    @Override
+    public int compareTo( User o ) {
+        return name.compareTo( o.name );
     }
 }
 

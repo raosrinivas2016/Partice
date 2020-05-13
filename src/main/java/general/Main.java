@@ -1,22 +1,32 @@
 package general;
 
-import java.io.IOException;
+import dailyPratice.CodeOptimization;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import sendingMail.EmailController;
+
+import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import reading_endpoint.SecretsServiceUtil;
-import sendingMail.EmailController;
-
 
 @SpringBootApplication
 @ComponentScan( basePackageClasses = EmailController.class )
 
 public class Main implements Runnable {
 
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) {
+
+        /* pratice develop changes*/
+/*
+        if(new April_30_2020().isFaxNoValid( "1-212-222 8888" )){
+            System.out.println("given Fax no is in valid format");
+        }
+*/
+
+        int[] ants = { 23, 231, 232 };
+        new CodeOptimization().getPatientLetters( ants );
 
         /* to launch spring application to send an email
         SpringApplication.run(Main.class,args);
@@ -68,9 +78,9 @@ public class Main implements Runnable {
 /*
         TODO
         whats the difference between map and foreach in stream ? check documentation once.
-        lambadaExpression.sortedPersonStream().forEach( Person :: printPerson );
-        lambadaExpression.sortedPersonStream().map( Person :: printPerson );
 */
+        lambadaExpression.sortedPersonStream().forEach( Office.Person::printPerson );
+        lambadaExpression.sortedPersonStream().map( Office.Person::printPerson );
 
         //        filterVersionObject();
 
@@ -79,8 +89,33 @@ public class Main implements Runnable {
 
         jasonParser.davidTest();*/
 
+        /*
+        //Secrets out project : to read an endpoint*/
+        /*System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );*/
 
-        System.out.println( "something is working" + SecretsServiceUtil.getLatestSecretsFromEndPoint( "nothing" ).toString() );
+        /*Math Project :*/
+
+
+        /*System.out.printf( "Result : %d %n", new general.math.ImplementCalculate().addSubMulDiv( new Integer[]{ 1, 2, 3 }, "add" ) );
+        new general.tips.MyCalendar().test( "mm/dd/yyyy" );*/
+
+        //        User u1 = new User( 1, "Abd.zb" );
+        //        User u2 = new User( 2, "Abd.za" );
+        //        List<User> users = new java.util.ArrayList<>();
+        //        users.add( u1 );
+        //        users.add( u2 );
+        //        users.sort( User :: compareTo );
+        //        //        users.stream().map( User::getName );
+        //        for ( User a : users ) {
+        //            System.out.println( a.getName() );
+        //        }
+
+        sortDate();
+    }
+
+    static void sortDate() {
+        System.out.println( Calendar.getInstance().getTime() );
+        System.out.println( Calendar.getInstance().getTimeInMillis() );
     }
 
     private static void testingEnum() {
@@ -89,12 +124,14 @@ public class Main implements Runnable {
         System.out.println( statusEnum.valueOf( "COMPLETED" ) );
         EnumSet<statusEnum> pausedOrStopped = EnumSet.of( statusEnum.PAUSED, statusEnum.STOPPED );
         Stream<statusEnum> completedOrPaused = Stream.of( statusEnum.COMPLETED, statusEnum.PAUSED );
-        List<statusEnum> startedButStopped = completedOrPaused.filter( pausedOrStopped :: contains ).collect( Collectors.toList() );
+        List<statusEnum> startedButStopped = completedOrPaused.filter( pausedOrStopped::contains )
+                                                              .collect( Collectors.toList() );
         System.out.println( "size of enum after filetring : " + startedButStopped.size() );
     }
 
-    private static void filterVersionObject( ) {
-        Stream.of( "2019.01.0-Snapshot", "2018.02.0010Snapshot", "2017.03.234" ).forEach( Main :: filterStringToAddVersionObject );
+    private static void filterVersionObject() {
+        Stream.of( "2019.01.0-Snapshot", "2018.02.0010Snapshot", "2017.03.234" )
+              .forEach( Main::filterStringToAddVersionObject );
     }
 
     private static void filterStringToAddVersionObject( String givenString ) {
@@ -104,7 +141,7 @@ public class Main implements Runnable {
     }
 
     private static void test( String s1 ) {
-        if ( s1.chars().allMatch( Character :: isDigit ) ) {
+        if ( s1.chars().allMatch( Character::isDigit ) ) {
             System.out.println( new Version( s1 ).toString() );
         }
     }
@@ -127,6 +164,8 @@ public class Main implements Runnable {
 
         } while ( true );
     }
+
+
 
 
 

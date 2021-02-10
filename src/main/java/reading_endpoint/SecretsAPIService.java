@@ -16,7 +16,7 @@ public interface SecretsAPIService {
     @GET
     @Path( "/b54f005a3eeedeaa30bf301b24aaa4a60a2325ae" )
         //    @Path( "/tempGetLatestSecrets" )
-    Response getLatestSecrets( );
+    Response getLatestSecrets();
 
     //            @HeaderParam( HttpHeaders.AUTHORIZATION ) String auth );
     //        @PathParam( "programId" )

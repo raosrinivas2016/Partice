@@ -3,6 +3,20 @@ package reading_endpoint;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import org.apache.cxf.configuration.jsse.TLSClientParameters;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+import org.apache.cxf.jaxrs.client.ClientConfiguration;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.ConnectionType;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.apache.http.HttpHost;
+import org.apache.http.client.utils.URIUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -19,19 +33,6 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.apache.cxf.configuration.jsse.TLSClientParameters;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.jaxrs.client.ClientConfiguration;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.transport.http.HTTPConduit;
-import org.apache.cxf.transports.http.configuration.ConnectionType;
-import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
-import org.apache.http.HttpHost;
-import org.apache.http.client.utils.URIUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class SecretsServiceUtil {
@@ -51,8 +52,6 @@ public class SecretsServiceUtil {
         try {
             SecretsAPIService service = createSecretService();
             if ( service != null ) {
-
-                //                Response response = service.getFormsAndQueryAlerts( tokenManager.getAuthorizationHeader(), databaseUuid.toString() );
 
                 Response response = service.getLatestSecrets();
 
